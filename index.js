@@ -5,6 +5,7 @@ var cors = require('cors');
 var authorize = require('./middleware/auth.js');
 
 var forecastRouter = require('./routers/forecast.router.js');
+var indexRouter = require('./routers/index.router.js');
 
 var port = process.env.PORT || 8080;
 
@@ -13,9 +14,7 @@ server.use(logger);
 server.use(cors());
 server.use(authorize);
 
-server.get('/', function(request, response){
-  response.sendFile('public/html/index.html', {root: __dirname});
-});
+server.use(indexRouter);
 
 server.use(forecastRouter);
 
