@@ -8,16 +8,16 @@ var timeoutConfig = {
   timeout: 2000
 };
 
-router.use(authorize);
+//router.use(authorize);
 
-router.get('/forecast/:latitude,:longitude', function(request, response){
+router.get('/forecast/:latitude,:longitude', function(request, response) {
   var url = buildForecastURL(request.params.latitude, request.params.longitude);
 
   axios.get(url, timeoutConfig)
-       .then(function(forecast){
+       .then(function(forecast) {
          response.send(forecast.data);
        })
-       .catch(function(error){
+       .catch(function(error) {
          response.send(error);
        });
 });
