@@ -5,10 +5,10 @@
   LocationController.$inject = ['$scope', '$http'];
 
   function LocationController($scope, $http) {
-    $scope.submitLocation = submitLocation;
+    $scope.getWeather = getWeather;
     $scope.getAddress = getAddress;
 
-    function submitLocation(lat, lon) {
+    function getWeather(lat, lon) {
       console.log(lat, lon);
     }
     function getAddress(lat, lon) {
