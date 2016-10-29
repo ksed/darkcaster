@@ -2,14 +2,17 @@
   angular.module('forecast-app')
     .controller('LocationController', LocationController);
 
-  LocationController.$inject = ['$scope', '$http'];
+  LocationController.$inject = ['$scope', '$http', 'WeatherService'];
 
-  function LocationController($scope, $http) {
+  function LocationController($scope, $http, WeatherService) {
     $scope.getWeather = getWeather;
     $scope.getAddress = getAddress;
 
     function getWeather(lat, lon) {
-      console.log(lat, lon);
+      WeatherService.getWeather(lat, lon)
+      .then(function(response) {
+        $scope.weather = response.data;
+      });
     }
     function getAddress(lat, lon) {
       console.log('calling getGeocode...');
