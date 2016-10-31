@@ -2,56 +2,100 @@
 <html lang="en" ng-app="forecast-app">
   <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
     <title>Get Your Weather Forecast</title>
   </head>
   <body>
-    <location>
+    <location ng-controller="LocationController">
       <div class="container-fluid">
         <div class="row">
           <div id="app-title" class="col-md-12 col-sm-12 col-xs-12">
             <h1>Get Your Weather Forecast</h1>
           </div>
         </div>
-
-        <div id="app-location" class="row" ng-controller="LocationController">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <p>
-              <label for="userLatitude">Enter your latitude and longitude below:</label>
-            </p>
-            <p>
-              <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude">
-              <input id="user-lon" type="text" placeholder="Longitude" ng-model="longitude">
-            </p>
-            <p>
-              <button type="button" class="btn btn-info btn-sm" ng-click='getAddress(latitude, longitude)'>Estimate My Address</button>
-              <span ng-model="address">{{ address }}</span>
-            </p>
-            <p>
-              <button id="submit-location" type="button" class="btn btn-success btn-sm" ng-click='getWeather(latitude, longitude)'>Get the Forecast</button>
-            </p>
-          </div>
-
-          <div ng-show='weather.currently'>
-            <div class="row">
-              <div class="col-md-1">
-                <img ng-src="images/{{weather.currently.icon}}.png"
-                class="img-responsive" alt="{{weather.currently.icon}}">
+        <div class="row">
+          <!-- Navigation Tabs -->
+          <ul class="nav nav-tabs" id="myTab">
+            <li>
+              <a href="#a" data-toggle="tab">Address</a>
+            </li>
+            <li class="active">
+              <a href="#c" data-toggle="tab">Coordinates</a>
+            </li>
+          </ul>
+          <!-- Content -->
+          <div class="col-md-9">
+            <div class="tab-content">
+              <div id="a" class="tab-pane">
+                <div class="row app-location">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <p>
+                      <label for="userLatitude">Enter your address below:</label>
+                    </p>
+                    <p>
+                      <input id="user-address" type="text" placeholder="Address" ng-model="userAddress">
+                    </p>
+                    <p>
+                      <button type="button" class="btn btn-info btn-sm" ng-click='getCoordinates(userAddress)'>Estimate My Coordinates</button>
+                      <span ng-model="coordinates">{{ coordinates.lat }}</span>,
+                      <span ng-model="coordinates">{{ coordinates.lng }}</span>
+                    </p>
+                    <p>
+                      <button id="submit-location" type="button" class="btn btn-success btn-sm" ng-click='getWeather(coordinates.lat, coordinates.lng)'>Get the Forecast</button>
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-9">
-                <h3>{{weather.currently.summary}}</h3>
-              </div>
-              <div class="col-md-2">
-                <strong>{{weather.currently.time*1000 | date:"short"}}</strong>
+              <div id="c" class="tab-pane active">
+                <div class="row app-location">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <p>
+                      <label for="userLatitude">Enter your latitude and longitude below:</label>
+                    </p>
+                    <p>
+                      <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude">
+                      <input id="user-lon" type="text" placeholder="Longitude" ng-model="longitude">
+                    </p>
+                    <p>
+                      <button type="button" class="btn btn-info btn-sm" ng-click='getAddress(latitude, longitude)'>Estimate My Address</button>
+                      <span ng-model="address">{{ address }}</span>
+                    </p>
+                    <p>
+                      <button id="submit-location" type="button" class="btn btn-success btn-sm" ng-click='getWeather(latitude, longitude)'>Get the Forecast</button>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3">
-                <p>{{weather.currently.temperature | number:0}}&deg F</p>
-              </div>
-              <div class="col-md-3 col-md-offset-6">
-                <p>{{weather.currently.precipProbability*100 | number:0}}% rain</p>
+              <div id="forecast" ng-show='weather.currently'>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Your Current Weather:</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-1">
+                    <img ng-src="images/{{weather.currently.icon}}.png"
+                    class="img-responsive" alt="{{weather.currently.icon}}">
+                  </div>
+                  <div class="col-md-9">
+                    <h3>{{weather.currently.summary}}</h3>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>{{weather.currently.time*1000 | date:"short"}}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <p>{{weather.currently.temperature | number:0}}&deg F</p>
+                  </div>
+                  <div class="col-md-3 col-md-offset-6">
+                    <p>{{weather.currently.precipProbability*100 | number:0}}% rain</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -64,5 +108,12 @@
     <script src="js/app.js"></script>
     <script src="js/controllers/location.controller.js"></script>
     <script src="js/services/weather.service.js"></script>
+    <script src="js/services/geocode.service.js"></script>
+    <script src="js/assets/bootstrap-tab.js">
+    <script>
+      $(function () {
+        $('#myTab a:last').tab('show');
+      })
+    </script>
   </body>
 </html>
