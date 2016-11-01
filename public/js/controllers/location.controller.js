@@ -6,15 +6,22 @@
 
   function LocationController($scope, $http, WeatherService, GoogleGeocodeService) {
     $scope.getWeather = getWeather;
+    $scope.weather = WeatherService.weatherData;
+    //$scope.log = log;
+    $scope.$watch(function() {
+      return WeatherService.weatherData;
+    }, function(newVal, oldVal) {
+      $scope.weather = WeatherService.weatherData;
+    });
     $scope.getAddress = getAddress;
     $scope.getCoordinates = getCoordinates;
 
     function getWeather(lat, lon) {
-      WeatherService.getWeather(lat, lon)
-        .then(function(response) {
-          $scope.weather = response.data;
-        });
+      WeatherService.getWeather(lat, lon);
     }
+    // function log() {
+    //   console.log(WeatherService.weatherData);
+    // }
     function getAddress(lat, lon) {
       $scope.address = GoogleGeocodeService.getAddress(lat, lon)
         .then(function(response) {

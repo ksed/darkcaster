@@ -68,6 +68,7 @@
                   </div>
                 </div>
               </div>
+              <!-- <button ng-click="log()">Log</button> -->
             </div>
             <div class="row">
               <div id="forecast" ng-show='weather.currently'>
@@ -85,6 +86,7 @@
                     <h3>{{weather.currently.summary}}</h3>
                   </div>
                   <div class="col-md-2">
+                    <!-- The following filters the time to a date-short format -->
                     <strong>{{weather.currently.time*1000 | date:"short"}}</strong>
                   </div>
                 </div>
