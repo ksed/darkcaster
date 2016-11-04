@@ -8,7 +8,7 @@
     <title>Get Your Weather Forecast</title>
   </head>
   <body>
-    <currently ng-controller="LocationController">
+    <main ng-controller="LocationController">
       <div class="container-fluid">
         <div class="row">
           <div id="app-title" class="col-md-12 col-sm-12 col-xs-12">
@@ -17,7 +17,7 @@
         </div>
         <div class="row">
           <!-- Navigation Tabs (http://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp) -->
-          <ul class="nav nav-tabs">
+          <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active">
               <a data-toggle="tab" href="#ad">An Address,</a>
             </li>
@@ -28,23 +28,23 @@
           <!-- Content -->
           <div class="col-md-12">
             <div class="tab-content">
-              <div id="ad" class="tab-pane fade in active">
+              <div class="tab-pane active" id="ad">
                 <p>
                   <label for="user-address">Enter your address below:</label>
                 </p>
                 <p>
-                  <input id="user-address" type="text" placeholder="Address" ng-model="userAddress" size="50">
+                  <input id="user-address" type="text" placeholder="Address" ng-model="userAddress" size="50" autofocus>
                 </p>
                 <p>
                   <button id="submit-address" type="button" class="btn btn-success btn-sm" ng-click='getWeatherAddress(userAddress)'>Get the Forecast</button>
                 </p>
               </div>
-              <div id="cd" class="tab-pane fade">
+              <div class="tab-pane" id="cd">
                 <p>
                   <label for="user-lat">Enter your latitude and longitude below:</label>
                 </p>
                 <p>
-                  <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude">
+                  <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude" autofocus>
                   <input id="user-lon" type="text" placeholder="Longitude" ng-model="longitude">
                 </p>
                 <p>
@@ -57,13 +57,11 @@
         </div>
         <div class="row">
           <div class="forecast" ng-show='weather.currently'>
-            <div class="row">
-              <div class="col-md-12">
-                <h4>Your location: {{ address }} ({{ coordinates.lat | number:4 }}, {{ coordinates.lng | number:4 }})</h4>
-                <h3>Your Current Weather:</h3>
-              </div>
+            <div class="col-md-10">
+              <h4>Your location: {{ address }} ({{ coordinates.lat | number:4 }}, {{ coordinates.lng | number:4 }})</h4>
+              <h3>Your Current Weather:</h3>
             </div>
-            <div class="row">
+            <div class="col-md-10">
               <div class="col-md-1">
                 <img ng-src="images/{{weather.currently.icon}}.png"
                 class="img-responsive" alt="{{weather.currently.icon}}">
@@ -76,7 +74,7 @@
                 <strong>{{weather.currently.time*1000 | date:"short"}}</strong>
               </div>
             </div>
-            <div class="row">
+            <div class="col-md-10">
               <div class="col-md-3">
                 <p>{{weather.currently.temperature | number:0}}&deg F</p>
               </div>
@@ -84,11 +82,11 @@
                 <p>{{weather.currently.precipProbability*100 | number:0}}% rain</p>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-10">
               <h3>Your Forecast:</h3>
             </div>
             <!-- Navigation Tabs -->
-            <div class="col-md-12">
+            <div class="col-md-10">
               <!-- Navigation Tabs -->
               <ul class="nav nav-tabs">
                 <li class="active">
@@ -103,23 +101,29 @@
               </ul>
               <!-- Content -->
               <div class="tab-content">
-                <div id="da" class="tab-pane fade in active">
+                <div id="da" class="tab-pane active">
                   <div>
                     <ul>
-                      <li ng-repeat="day in weather.daily.data">{{day}}</li>
+                      <li ng-repeat="day in weather.daily.data">
+                        {{day}}
+                      </li>
                     </ul>
                     Daily
                   </div>
                 </div>
-                <div id="hr" class="tab-pane fade">
+                <div id="hr" class="tab-pane">
                   <ul>
-                    <li ng-repeat="hour in weather.hourly.data">{{hour}}</li>
+                    <li ng-repeat="hour in weather.hourly.data">
+                      {{hour}}
+                    </li>
                   </ul>
                   Hourly
                 </div>
-                <div id="mn" class="tab-pane fade">
+                <div id="mn" class="tab-pane">
                   <ul>
-                    <li ng-repeat="minute in weather.minutely.data">{{minute}}</li>
+                    <li ng-repeat="minute in weather.minutely.data">
+                      {{minute}}
+                    </li>
                   </ul>
                   Minutely
                 </div>
@@ -128,17 +132,18 @@
           </div>
         </div>
       </div>
-    </currently>
-    <forecast>
+    </main>
+    <!-- <forecast>
       <div class="container-fluid">
         <div class="row">
 
         </div>
       </div>
-    </forecast>
+    </forecast> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers/location.controller.js"></script>
     <script src="js/controllers/daily.controller.js"></script>
