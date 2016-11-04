@@ -2,64 +2,90 @@
 <html lang="en" ng-app="forecast-app">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
-    <title>Get Your Weather Forecast</title>
+    <title>Your Weather Delivered</title>
   </head>
   <body>
-    <main ng-controller="LocationController">
+    <weatherSection ng-controller="LocationController">
       <div class="container-fluid">
         <div class="row">
           <div id="app-title" class="col-md-12 col-sm-12 col-xs-12">
-            <h1>Get Your Weather Forecast</h1>
+            <div class="col-md-10"><h1>Your Weather Delivered</h1></div>
+            <div class="col-md-2"><img src="images/truck-icon-white.png" alt="Delivery truck" class="img-responsive" /></div>
           </div>
         </div>
         <div class="row">
-          <!-- Navigation Tabs (http://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp) -->
-          <ul class="nav nav-tabs" data-tabs="tabs">
+          <!-- nav-tab menus help: http://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp -->
+          <ul class="nav nav-tabs">
             <li class="active">
-              <a data-toggle="tab" href="#ad">An Address,</a>
+              <h5>Click one to enter your:&nbsp</h5>
             </li>
-            <li class="">
-              <a data-toggle="tab" href="#cd">Coordinates</a>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Location/Zip
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <label for="user-location">Enter below:</label>
+                </li>
+                <li>
+                  <p><input id="user-location" type="text" placeholder="Location/ZipCode" ng-model="userAddress" size="50" autofocus></p>
+                </li>
+                <li>
+                  <button id="submit-location" type="button" class="btn btn-success btn-sm" ng-click='getWeatherAddress(userAddress)'>Get the Forecast</button>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Coordinates
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <label for="user-lat">Enter below:</label>
+                </li>
+                <li>
+                  <p>
+                    <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude" size="30" autofocus>
+                    <input id="user-lon" type="text" placeholder="Longitude" ng-model="longitude" size="30">
+                  </p>
+                </li>
+                <li>
+                  <button id="submit-coords" type="button" class="btn btn-success btn-sm" ng-click='getWeather(latitude, longitude)'>Get the Forecast</button>
+                </li>
+              </ul>
             </li>
           </ul>
-          <!-- Content -->
-          <div class="col-md-12">
-            <div class="tab-content">
-              <div class="tab-pane active" id="ad">
-                <p>
-                  <label for="user-address">Enter your address below:</label>
-                </p>
-                <p>
-                  <input id="user-address" type="text" placeholder="Address" ng-model="userAddress" size="50" autofocus>
-                </p>
-                <p>
-                  <button id="submit-address" type="button" class="btn btn-success btn-sm" ng-click='getWeatherAddress(userAddress)'>Get the Forecast</button>
-                </p>
-              </div>
-              <div class="tab-pane" id="cd">
-                <p>
-                  <label for="user-lat">Enter your latitude and longitude below:</label>
-                </p>
-                <p>
-                  <input id="user-lat" type="text" placeholder="Latitude" ng-model="latitude" autofocus>
-                  <input id="user-lon" type="text" placeholder="Longitude" ng-model="longitude">
-                </p>
-                <p>
-                  <button id="submit-coords" type="button" class="btn btn-success btn-sm" ng-click='getWeather(latitude, longitude)'>Get the Forecast</button>
-                </p>
-              </div>
-              <!-- <button ng-click="log()">Log</button> -->
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="forecast" ng-show='weather.currently'>
             <div class="col-md-10">
               <h4>Your location: {{ address }} ({{ coordinates.lat | number:4 }}, {{ coordinates.lng | number:4 }})</h4>
-              <h3>Your Current Weather:</h3>
+              <h3>Your Current Weather: <small>({{weather.currently.time*1000 | date:"short"}})</small></h3>
+            </div>
+            <div class="col-md-12 data-array">
+              <div class="col-md-2">
+                <span class="larger-font">{{weather.currently.temperature | number:0}}&degF</span> / (feels like: {{weather.currently.apparentTemperature | number:0}}&degF)
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.pressure}} mb
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.humidity*100 | number:0}}% humidity
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.dewPoint*100 | number:0}}% dewpoint
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.cloudCover*100 | number:0}}% cloudiness
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.precipProbability*100 | number:0}}% rain
+              </div>
+              <div class="col-md-12">
+                <span class="larger-font">Currently: {{weather.currently.summary}}. &nbsp&nbsp{{weather.hourly.summary}}</span>
+              </div>
             </div>
             <div class="col-md-10">
               <div class="col-md-1">
@@ -82,11 +108,11 @@
                 <p>{{weather.currently.precipProbability*100 | number:0}}% rain</p>
               </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
               <h3>Your Forecast:</h3>
             </div>
-            <!-- Navigation Tabs -->
-            <div class="col-md-10">
+            <!-- nav-tabs and panes help: http://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp -->
+            <div class="col-md-12">
               <!-- Navigation Tabs -->
               <ul class="nav nav-tabs">
                 <li class="active">
@@ -99,47 +125,47 @@
                   <a href="#mn" data-toggle="tab">Minutely</a>
                 </li>
               </ul>
-              <!-- Content -->
-              <div class="tab-content">
-                <div id="da" class="tab-pane active">
-                  <div>
-                    <ul>
-                      <li ng-repeat="day in weather.daily.data">
-                        {{day}}
-                      </li>
-                    </ul>
-                    Daily
-                  </div>
-                </div>
-                <div id="hr" class="tab-pane">
-                  <ul>
-                    <li ng-repeat="hour in weather.hourly.data">
-                      {{hour}}
-                    </li>
-                  </ul>
-                  Hourly
-                </div>
-                <div id="mn" class="tab-pane">
-                  <ul>
-                    <li ng-repeat="minute in weather.minutely.data">
-                      {{minute}}
-                    </li>
-                  </ul>
-                  Minutely
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
       </div>
-    </main>
-    <!-- <forecast>
+    </weatherSection>
+    <forecastSection>
       <div class="container-fluid">
         <div class="row">
-
+          <!-- Content -->
+          <div class="tab-content">
+            <div id="da" class="tab-pane active" ng-controller="DailyController" ng-show="weather.daily">
+              <div>
+                <ul>
+                  <li ng-repeat="day in weather.daily.data">
+                    {{day}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="hr" class="tab-pane" ng-controller="HourlyController" ng-show="weather.hourly">
+              <ul>
+                <li ng-repeat="hour in weather.hourly.data">
+                  {{hour}}
+                </li>
+              </ul>
+            </div>
+            <div id="mn" class="tab-pane" ng-controller="MinutelyController" ng-show="weather.minutely">
+              <ul>
+                <li ng-repeat="minute in weather.minutely.data">
+                  {{minute}}
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </forecast> -->
+    </forecastSection>
+    <footer>
+      <small><em>Powered by <a href="https://darksky.net/poweredby/">Dark Sky</a></em></small>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
