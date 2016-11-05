@@ -61,7 +61,7 @@
         <div class="row">
           <div class="forecast" ng-show='weather.currently'>
             <div class="col-md-10">
-              <h4>Your location: {{ address }} ({{ coordinates.lat | number:4 }}, {{ coordinates.lng | number:4 }})</h4>
+              <h5>Your location: {{ address }} ({{ coordinates.lat | number:4 }}, {{ coordinates.lng | number:4 }})</h5>
               <h3>Your Current Weather: <small>({{weather.currently.time*1000 | date:"short"}})</small></h3>
             </div>
             <div class="col-md-12 data-array">
@@ -86,10 +86,10 @@
               <div class="col-md-12">
                 <div class="col-md-1">
                   <img ng-src="images/{{weather.currently.icon}}.png"
-                  class="img-responsive" alt="{{weather.currently.icon}}">
+                  width="36px" height="36px" alt="{{weather.currently.icon}}">
                 </div>
                 <div class="col-md-11">
-                  <h3>Currently: {{weather.currently.summary}}. &nbsp&nbsp{{weather.hourly.summary}}</h3>
+                  <h4>Currently: {{weather.currently.summary}}. &nbsp&nbsp{{weather.hourly.summary}}</h4>
                 </div>
               </div>
             </div>
@@ -121,10 +121,20 @@
           <!-- Content -->
           <div class="tab-content">
             <div id="da" class="tab-pane active" ng-controller="DailyController" ng-show="weather.daily">
-              <div>
+              <div class="col-md-12">
+                <h4 class="data-array">&nbsp{{weather.daily.summary}}</h4>
                 <ul>
-                  <li ng-repeat="day in weather.daily.data">
-                    {{day}}
+                  <li ng-repeat="day in weather.daily.data" class="cards">
+                    <div class="daily-card">
+                      <p>
+                        {{day.time*1000 | date:"EEEE"}}
+                      </p>
+                      <img ng-src="images/{{day.icon}}.png" width="48px" height="48px" alt="{{day.icon}}" title="{{day.summary}}" >
+                      <p>
+                        <small><span class="max">{{day.temperatureMax | number:0}}&degF</span> /
+                          <span class="min">{{day.temperatureMin | number:0}}&degF</span></small>
+                      </p>
+                    </div>
                   </li>
                 </ul>
               </div>

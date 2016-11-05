@@ -27,3 +27,22 @@ h5 {
 .larger-font {
   font-size: 1.1em;
 }
+
+.cards {
+  display: inline-block;
+  list-style-type: none;
+  margin: 0px 5px;
+}
+
+.daily-card {
+  display: inline-block;
+  width: 80px;
+}
+
+.max {
+  color: red;
+}
+
+.min {
+  color: lightgrey;
+}
