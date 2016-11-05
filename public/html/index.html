@@ -122,12 +122,12 @@
           <div class="tab-content">
             <div id="da" class="tab-pane active" ng-controller="DailyController" ng-show="weather.daily">
               <div class="col-md-12">
-                <h4 class="data-array">&nbsp{{weather.daily.summary}}</h4>
+                <h4>&nbsp<em>{{weather.daily.summary}}</em></h4>
                 <ul>
                   <li ng-repeat="day in weather.daily.data" class="cards">
                     <div class="daily-card">
-                      <p>
-                        {{day.time*1000 | date:"EEEE"}}
+                      <p><strong>{{day.time*1000 | date:"EEEE"}}</strong><br>
+                        <small><em>{{day.precipProbability*100 | number:0}}% rain</em></small>
                       </p>
                       <img ng-src="images/{{day.icon}}.png" width="48px" height="48px" alt="{{day.icon}}" title="{{day.summary}}" >
                       <p>

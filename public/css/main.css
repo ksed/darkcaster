@@ -37,6 +37,8 @@ h5 {
 .daily-card {
   display: inline-block;
   width: 80px;
+  position: relative;
+  text-align: center;
 }
 
 .max {
