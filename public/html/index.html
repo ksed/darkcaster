@@ -65,7 +65,7 @@
               <h3>Your Current Weather: <small>({{weather.currently.time*1000 | date:"short"}})</small></h3>
             </div>
             <div class="col-md-12 data-array">
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <span class="larger-font">{{weather.currently.temperature | number:0}}&degF</span> / (feels like: {{weather.currently.apparentTemperature | number:0}}&degF)
               </div>
               <div class="col-md-2">
@@ -80,32 +80,17 @@
               <div class="col-md-2">
                 {{weather.currently.cloudCover*100 | number:0}}% cloudiness
               </div>
-              <div class="col-md-2">
+              <div class="col-md-1">
                 {{weather.currently.precipProbability*100 | number:0}}% rain
               </div>
               <div class="col-md-12">
-                <span class="larger-font">Currently: {{weather.currently.summary}}. &nbsp&nbsp{{weather.hourly.summary}}</span>
-              </div>
-            </div>
-            <div class="col-md-10">
-              <div class="col-md-1">
-                <img ng-src="images/{{weather.currently.icon}}.png"
-                class="img-responsive" alt="{{weather.currently.icon}}">
-              </div>
-              <div class="col-md-9">
-                <h3>{{weather.currently.summary}}</h3>
-              </div>
-              <div class="col-md-2">
-                <!-- The following filters the time to a date-short format -->
-                <strong>{{weather.currently.time*1000 | date:"short"}}</strong>
-              </div>
-            </div>
-            <div class="col-md-10">
-              <div class="col-md-3">
-                <p>{{weather.currently.temperature | number:0}}&deg F</p>
-              </div>
-              <div class="col-md-3 col-md-offset-6">
-                <p>{{weather.currently.precipProbability*100 | number:0}}% rain</p>
+                <div class="col-md-1">
+                  <img ng-src="images/{{weather.currently.icon}}.png"
+                  class="img-responsive" alt="{{weather.currently.icon}}">
+                </div>
+                <div class="col-md-11">
+                  <h3>Currently: {{weather.currently.summary}}. &nbsp&nbsp{{weather.hourly.summary}}</h3>
+                </div>
               </div>
             </div>
             <div class="col-md-12">
@@ -125,7 +110,6 @@
                   <a href="#mn" data-toggle="tab">Minutely</a>
                 </li>
               </ul>
-
             </div>
           </div>
         </div>
