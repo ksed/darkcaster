@@ -9,7 +9,7 @@
     $scope.getWeather = getWeather;
     $scope.getWeatherAddress = getWeatherAddress;
     $scope.weather = WeatherService.weatherData;
-    //$scope.log = log;
+    // $scope.log = log;
 
     $scope.$watch(function() {
       // This watches for changes in weatherData object in WeatherService
@@ -47,9 +47,9 @@
           WeatherService.getWeather(GoogleGeocodeService.coordinates.lat, GoogleGeocodeService.coordinates.lng);
         });
     }
-    //   console.log(WeatherService.weatherData);
+    //  console.log(WeatherService.weatherData);
     // function log() {
-    //   console.log(WeatherService.weatherData);
+    //   console.log(WeatherService.weatherData.currently.windBearing);
     // }
   }
 }());

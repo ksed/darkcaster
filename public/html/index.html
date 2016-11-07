@@ -69,19 +69,28 @@
                 <span class="larger-font">{{weather.currently.temperature | number:0}}&degF</span> / (feels like: {{weather.currently.apparentTemperature | number:0}}&degF)
               </div>
               <div class="col-md-2">
-                {{weather.currently.pressure}} mb
+                {{weather.currently.dewPoint | number:0}}&degF dewpoint
+              </div>
+              <div class="col-md-1">
+                {{weather.currently.precipProbability*100 | number:0}}% rain
+              </div>
+              <div class="col-md-2">
+                {{weather.currently.cloudCover*100 | number:0}}% cloudiness
               </div>
               <div class="col-md-2">
                 {{weather.currently.humidity*100 | number:0}}% humidity
               </div>
               <div class="col-md-2">
-                {{weather.currently.dewPoint*100 | number:0}}% dewpoint
-              </div>
-              <div class="col-md-2">
-                {{weather.currently.cloudCover*100 | number:0}}% cloudiness
-              </div>
-              <div class="col-md-1">
-                {{weather.currently.precipProbability*100 | number:0}}% rain
+                Wind: {{weather.currently.windSpeed}} mph
+                <svg width="12" height="12">
+                  <defs>
+                    <marker id="arrow" markerWidth="6" markerHeight="6" refx="0" refy="3" orient="auto" markerUnits="strokeWidth">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#f00" />
+                    </marker>
+                  </defs>
+                  <line x1="6" y1="12" x2="6" y2="6" stroke="#000" stroke-width="1" marker-end="url(#arrow)"
+                   ng-attr-transform="rotate({{weather.currently.windBearing}} 6 6)" />
+                </svg>
               </div>
               <div class="col-md-12">
                 <div class="col-md-1">
