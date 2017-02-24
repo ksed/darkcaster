@@ -138,6 +138,18 @@
                       <p><strong>{{day.time*1000 | date:"EEEE"}}</strong><br>
                         <small><em>{{day.precipProbability*100 | number:0}}% rain</em></small>
                       </p>
+                      <p>
+                        <svg class="wind-arrow" height="12" width="12">
+                          <marker id="triangle" viewBox=""0 -5 10 10"" refX="6" refY="3"
+                            markerUnits="strokeWidth" markerWidth="4" markerHeight="3"
+                            orient="auto"> <path d="M 0 0 L 10 5 L 0 10 z" />
+                          </marker>
+                          <line x1="6" y1="12" x2="6" y2="0"  marker-end="url(#triangle)"
+                          style="stroke:rgb(0,0,255);stroke-width:1"
+                          transform="rotate({{day.windBearing}} 6 6)" />
+                        </svg>
+                        <small><em>{{day.windSpeed | number:0}} mph</em></small>
+                      </p>
                       <img ng-src="images/{{day.icon}}.png" width="48px" height="48px" alt="{{day.icon}}" title="{{day.summary}}" >
                       <p>
                         <small><span class="max">{{day.temperatureMax | number:0}}&degF</span> /
